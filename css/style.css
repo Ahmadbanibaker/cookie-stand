@@ -1,0 +1,17 @@
+body{
+    background-color: antiquewhite;
+}
+
+h1{
+    color: blue;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    font-size: large;
+    text-align: center;
+    background-color: coral;
+}
+ul{
+    float: left;
+}
+label{
+    float: left;
+}
