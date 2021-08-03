@@ -1,7 +1,11 @@
-
+// let profiles = document.getElementById('main');
 let hours = ['6 AM','7am' ,'8am','9am','10am','11am','12pm','1pm','2pm','3pm','4pm','5pm','6pm','7pm'];
+let all = [];
+let divE = document.getElementById('main');
+let table = document.createElement('table');
+divE.appendChild(table);
 
-function cookiesStand(name,min,max,Avr){
+function cookiesStand(name,min,max,Avr) {
   this.name = name;
   this.min = min;
   this.max = max;
@@ -10,17 +14,9 @@ function cookiesStand(name,min,max,Avr){
   this.hourlycookes = [];
   this.result = [];
   this.hourlycustomers = [];
-
+  this.hours = ['6 AM','7am' ,'8am','9am','10am','11am','12pm','1pm','2pm','3pm','4pm','5pm','6pm','7pm'];
+  all.push(this);
 }
-
-// const Seattle = {
-//   name: 'Seattle',
-//   min : 23,
-//   max : 65,
-//   Avr : 6.3,
-//   hourlycustomers : [],
-//   total : 0,
-
 
 cookiesStand.prototype.customersperhour = function() {
   for(let i=0 ; i <= hours.length ; i++){
@@ -47,43 +43,47 @@ cookiesStand.prototype.finalresult = function(){
 
 
 cookiesStand.prototype.render = function () {
-  let divE = document.getElementById('main');
-  let table = document.createElement('table');
-  divE.appendChild(table);
-  let trElement = document.createElement('tr');
-  table.appendChild(trElement);
+  let totalofTotals  = 0;
+  let tdElement = document.createElement('tr');
+  table.appendChild(tdElement);
+  // let trElement = document.createElement('tr');
+  // table.appendChild(trElement);
 
+
+
+  let tanleElement1 = document.createElement('td');
+  tanleElement1.textContent = this.name;
+  tdElement.appendChild(tanleElement1);
 
   for (let index = 0; index < hours.length; index++) {
-    let tdElement = document.createElement('td');
-    tdElement.textContent = this.hourlycookes[index];
-    trElement.appendChild(tdElement);
+    totalofTotals += this.hourlycookes [index];
+    let tsElement = document.createElement('td');
+    tsElement.textContent = this.hourlycookes[index];
+    tdElement.appendChild(tsElement);
   }
+  let tsElement = document.createElement('td');
+  tsElement.textContent = totalofTotals;
+  tdElement.appendChild(tsElement);
 
 };
 let getMain = document.getElementById('main');
-
-// let cerateTable = document.createElement('table');
-// getMain.appendChild(cerateTable);
-// function header(){
-//   let headerTr = document.createElement('tr');
-//   cerateTable.appendChild(headerTr);
-//   let locationTh = document.createElement('th');
-//   locationTh.textContent = 'location';
-//   headerTr.appendChild(locationTh);
-//   for(i=0;i<hours.length;i++){
-
-//     let createTh = document.createElement('th');
-//     headerTr.appendChild(createTh);
-//     createTh.textContent = hours[i];
-//   }
-// }
 
 let Seattle = new cookiesStand ('Seattle', 23 ,65 ,6.3);
 let tokyo = new cookiesStand('Tokyo', 3 , 24 ,1.2);
 let dubai = new cookiesStand ('Dubai',11,38, 3.7);
 let paris = new cookiesStand('Paris', 20, 38, 2.3);
 let lima = new cookiesStand('Lima', 20, 38, 2.3);
+
+// Seattle.cookiesStand();
+// tokyo.cookiesStand();
+// dubai.cookiesStand();
+// paris.cookiesStand();
+// lima.cookiesStand();
+
+//console.log(all);
+
+tableheader();
+
 
 let countries = [Seattle,tokyo,dubai,paris,lima];
 
@@ -94,10 +94,44 @@ for (let index = 0; index < countries.length; index++) {
   countries[index].render();
 }
 
-function header (){
-  let headE = document.createElement('th');
-  table.appendChild('head');
+
+function tableheader (){
+  let trElement = document.createElement('tr');
+  table.appendChild(trElement);
+
+  hours.unshift(' ');
+  hours.push('Daily total');
+  for (let i = 0; i < hours.length; i++){
+    let thElement = document.createElement('th');
+    thElement.textContent = hours[i];
+    trElement.appendChild(thElement);
+  }
+  hours.shift();
+  hours.pop();
 }
+
+function totalHoury(){
+  let t = 0 ;
+  let totalEachHour = [];
+  let footerTE = document.createElement('tr');
+  table.appendChild(footerTE);
+
+  let tdL = document.createElement('td');
+  tdL.textContent = 'Totals';
+  footerTE.appendChild(tdL);
+  for(let x= 0 ; x<hours.length ; x++){
+    totalEachHour[x] = countries[0].hourlycookes[x] + countries[1].hourlycookes[x] + countries[2].hourlycookes[x]+ countries[3].hourlycookes[x]+countries[4].hourlycookes[x];
+    t += totalEachHour[x];
+    let tdTE = document.createElement('td');
+    tdTE.textContent = totalEachHour[x] ;
+    footerTE.appendChild(tdTE);
+  }
+  let tdTE = document.createElement('td');
+  tdTE.textContent = t;
+  footerTE.appendChild(tdTE);
+  console.log(t);
+}
+totalHoury();
 
 
 
