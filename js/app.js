@@ -80,7 +80,7 @@ let lima = new cookiesStand('Lima', 20, 38, 2.3);
 // paris.cookiesStand();
 // lima.cookiesStand();
 
-//console.log(all);
+console.log(all);
 
 tableheader();
 
@@ -112,18 +112,23 @@ function tableheader (){
 
 function totalHoury(){
   let t = 0 ;
-  let totalEachHour = [];
+
   let footerTE = document.createElement('tr');
+  footerTE.id = 'nofooter';
   table.appendChild(footerTE);
 
   let tdL = document.createElement('td');
   tdL.textContent = 'Totals';
   footerTE.appendChild(tdL);
   for(let x= 0 ; x<hours.length ; x++){
-    totalEachHour[x] = countries[0].hourlycookes[x] + countries[1].hourlycookes[x] + countries[2].hourlycookes[x]+ countries[3].hourlycookes[x]+countries[4].hourlycookes[x];
-    t += totalEachHour[x];
+    let totalEachHour =0;
+    for (let i = 0; i < all.length; i++) {
+      totalEachHour += all[i] .hourlycookes[x];
+
+    }
+    t += totalEachHour;
     let tdTE = document.createElement('td');
-    tdTE.textContent = totalEachHour[x] ;
+    tdTE.textContent = totalEachHour ;
     footerTE.appendChild(tdTE);
   }
   let tdTE = document.createElement('td');
@@ -133,5 +138,34 @@ function totalHoury(){
 }
 totalHoury();
 
+let countriesform = document.getElementById('cookiesform');
+countriesform.addEventListener('submit', addlocation);
+
+
+function addlocation (event){
+  console.log(event);
+  event.preventDefault();
+  removefooter();
+  let namevalue = event.target.namecountry.value;
+
+  let minvalue = event.target.min.value;
+  let maxvalue = event.target.max.value;
+  let avgvalue = event.target.avarege.value;
+  let newcountry = new cookiesStand (namevalue, minvalue , maxvalue , avgvalue );
+
+  
+
+  newcountry.customersperhour();
+  newcountry.purchaseachhour();
+  newcountry.finalresult();
+  newcountry.render();
+
+  totalHoury();
+}
+
+function removefooter(){
+  let footerRow=document.getElementById('nofooter');
+  footerRow.remove();
+}
 
 

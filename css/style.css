@@ -12,9 +12,6 @@ h1{
 ul{
     float: left;
 }
-label{
-    float: left;
-}
 
 th, tr , td {
     padding: 2%;
